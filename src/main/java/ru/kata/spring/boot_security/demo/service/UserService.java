@@ -26,7 +26,9 @@ public class UserService implements UserDetailsService {
     }
 
     public void save(User user, boolean isNewUser) {
-        if (isNewUser) {
+        if (user.getPassword().isEmpty() && !isNewUser) {
+            user.setPassword(get(user.getId()).getPassword());
+        } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
@@ -47,8 +49,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByName(username);
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByMail(mail);
 
         if(user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");

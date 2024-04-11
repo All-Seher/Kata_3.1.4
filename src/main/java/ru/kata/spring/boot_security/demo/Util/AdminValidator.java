@@ -38,7 +38,7 @@ public class AdminValidator implements Validator {
         User user = (User) target;
         int i = user.getId();
         try {
-            userFromRepo = (User) userService.loadUserByUsername(user.getName());
+            userFromRepo = (User) userService.loadUserByUsername(user.getMail());
             if (user.getId() == userFromRepo.getId() && user.getId() != 1) {
                 return;
             }

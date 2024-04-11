@@ -33,7 +33,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("USER");
 
         Role adminRole = roleRepository.findByName("ADMIN");
-       User user = createUserIfNotFound("1", "1", "1");
+        User user = createUserIfNotFound("Admin", "Admin", "admin", 99, "admin@mail.ru");
         user.setRoles(Set.of(adminRole));
     }
 
@@ -49,10 +49,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public User createUserIfNotFound(String name, String surName, String Password) {
-        Optional<User> user = userRepository.findByName(name);
+    public User createUserIfNotFound(String name, String surName, String Password, int age, String mail) {
+        Optional<User> user = userRepository.findByMail(mail);
         if (user.isEmpty()) {
-            user = Optional.of(new User(name, surName, passwordEncoder.encode("1")));
+            user = Optional.of(new User(name, surName, passwordEncoder.encode(Password), age, mail));
             userRepository.save(user.get());
         }
 

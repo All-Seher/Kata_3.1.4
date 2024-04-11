@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +13,6 @@ import java.util.Collections;
 @Component
 public class Authentication implements AuthenticationProvider {
 
-    @Autowired
     private final UserService userService;
 
     public Authentication(UserService userService) {
